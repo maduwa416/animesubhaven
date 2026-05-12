@@ -1,0 +1,46 @@
+.hero-bg {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), 
+                      url('astablackclover.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+}
+
+/* --- අකුරු වලට Neon Red Glow එකක් දෙමු --- */
+.text-yellow-500 {
+    color: #ff0000 !important; /* රතු පාට */
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Red Glow */
+}
+
+/* --- Buttons රතු කරමු --- */
+.bg-yellow-500 {
+    background-color: #b91c1c !important; /* Crimson Red */
+    color: white !important;
+    box-shadow: 0 0 15px rgba(185, 28, 28, 0.4);
+    transition: 0.3s;
+}
+
+.bg-yellow-500:hover {
+    background-color: #ef4444 !important; /* Bright Red */
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+    transform: scale(1.02);
+}
+
+/* --- Search Bar එකේ Border එක --- */
+#searchInput:focus {
+    border: 2px solid #ff0000;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+}
+
+/* --- Scrollbar එකත් රතු කරමු --- */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #b91c1c;
+    box-shadow: 0 0 10px rgba(185, 28, 28, 0.5);
+}
+
+/* --- Cards Hover කරද්දී Glow වෙන්න --- */
+.group:hover {
+    border-color: rgba(255, 0, 0, 0.5) !important;
+    background: rgba(255, 0, 0, 0.05) !important;
+}
