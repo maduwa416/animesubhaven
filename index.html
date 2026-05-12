@@ -10,6 +10,33 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-black text-white font-['Inter']">
+<!-- Telegram Floating Button -->
+<a href="https://t.me/animesubhaven" target="_blank" style="
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #24A1DE;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 12px;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    box-shadow: 0 0 20px rgba(36, 161, 222, 0.5);
+    transition: all 0.3s ease;
+" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px rgba(36, 161, 222, 0.8)';" 
+  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(36, 161, 222, 0.5)';"
+  class="tg-btn">
+    <span class="tg-text">Join Telegram Channel</span>
+    <i class="fab fa-telegram-plane" style="font-size: 20px;"></i>
+</a>
 
 <div id="main-ui" class="hero-bg min-h-screen">
     <!-- Navigation -->
@@ -132,3 +159,13 @@
 <script src="script.js"></script>
 </body>
 </html>
+
+<!-- Telegram Floating Button -->
+<a href="https://t.me/animesubhaven" target="_blank" 
+   style="position: fixed; bottom: 25px; right: 25px; z-index: 1000; display: flex; align-items: center; gap: 12px; background: #24A1DE; color: white; padding: 12px 22px; border-radius: 50px; font-family: 'Inter', sans-serif; font-weight: 900; font-size: 11px; text-transform: uppercase; text-decoration: none; letter-spacing: 1.5px; box-shadow: 0 10px 25px rgba(36, 161, 222, 0.4); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);"
+   onmouseover="this.style.transform='scale(1.1) translateY(-5px)'; this.style.boxShadow='0 15px 35px rgba(36, 161, 222, 0.6)';"
+   onmouseout="this.style.transform='scale(1) translateY(0)'; this.style.boxShadow='0 10px 25px rgba(36, 161, 222, 0.4)';"
+   id="tg-floating-btn">
+    <span>Join Telegram Channel</span>
+    <i class="fab fa-telegram-plane" style="font-size: 18px;"></i>
+</a>
