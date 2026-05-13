@@ -1,5 +1,4 @@
-/* --- දැනට තියෙන ඔයාගේ පරණ CSS ටික --- */
-
+/* --- Base Styles --- */
 .hero-bg {
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), 
                       url('astablackclover.jpg'); 
@@ -9,42 +8,41 @@
     min-height: 100vh;
 }
 
-.text-yellow-500 {
-    color: #ff0000 !important; 
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.7); 
+/* --- RGB Logo Animation --- */
+@keyframes rgbGlow {
+    0% { color: #ff0000; text-shadow: 0 0 15px #ff0000; }
+    33% { color: #00ff00; text-shadow: 0 0 15px #00ff00; }
+    66% { color: #0000ff; text-shadow: 0 0 15px #0000ff; }
+    100% { color: #ff0000; text-shadow: 0 0 15px #ff0000; }
 }
 
-.bg-yellow-500 {
-    background-color: #b91c1c !important; 
-    color: white !important;
-    box-shadow: 0 0 15px rgba(185, 28, 28, 0.4);
-    transition: 0.3s;
+.rgb-text {
+    animation: rgbGlow 6s infinite alternate ease-in-out;
 }
 
-.bg-yellow-500:hover {
-    background-color: #ef4444 !important; 
-    box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
-    transform: scale(1.02);
+/* --- Mobile Menu (Hamburger) --- */
+.mobile-nav {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(15px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    transition: 0.5s ease-in-out;
+    z-index: 2000;
 }
 
-#searchInput:focus {
-    border: 2px solid #ff0000;
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+.mobile-nav.active {
+    right: 0;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #b91c1c;
-    box-shadow: 0 0 10px rgba(185, 28, 28, 0.5);
-}
-
-.group:hover {
-    border-color: rgba(255, 0, 0, 0.5) !important;
-    background: rgba(255, 0, 0, 0.05) !important;
-}
-
-/* --- අලුතින් එකතු කළ Telegram Button & Header Responsive CSS --- */
-
-/* Telegram Button Base (PC එකට) */
+/* --- Telegram Button --- */
 .tg-btn {
     position: fixed;
     bottom: 25px;
@@ -60,58 +58,24 @@
     font-weight: 900;
     text-transform: uppercase;
     text-decoration: none;
-    font-size: 12px;
     box-shadow: 0 10px 25px rgba(36, 161, 222, 0.4);
-    transition: all 0.3s ease;
+    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
-/* Header එක Sticky කරලා Mobile වලට ඉඩ හදමු */
-header {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    backdrop-filter: blur(8px);
+.tg-btn.compact {
+    max-width: 48px;
+    padding: 12px;
 }
 
-/* Mobile & Tablet එකට වෙනස් කරන කොටස */
-@media (max-width: 768px) {
-    /* Header එකේ නමයි මෙනුයි එක පෙළට තියන්න */
-    header .container {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-left: 15px;
-        padding-right: 15px;
-    }
+.tg-btn.compact span {
+    display: none;
+}
 
-    /* නම (Logo) පොඩි කරමු */
-    header h1 {
-        font-size: 1.1rem !important;
-    }
-
-    /* මෙනු එකේ අකුරු පොඩි කරමු */
-    header nav ul {
-        gap: 10px !important;
-    }
-
-    header nav a {
-        font-size: 10px !important;
-    }
-
-    /* ෆෝන් එකේදී Telegram Button එකේ අකුරු Hide කරමු */
-    .tg-text {
-        display: none;
-    }
-
-    .tg-btn {
-        padding: 12px;
-        bottom: 20px;
-        right: 20px;
-        border-radius: 50%; /* රවුමක් වගේ පේන්න */
-    }
-
-    .tg-btn i {
-        font-size: 22px;
-        margin: 0;
-    }
+/* --- Other Custom Styles --- */
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #b91c1c;
+    box-shadow: 0 0 10px rgba(185, 28, 28, 0.5);
 }
