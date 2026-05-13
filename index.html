@@ -187,9 +187,9 @@
                             <div id="en-inputs" class="mt-8 grid grid-cols-2 md:grid-cols-5 gap-4 max-h-[380px] overflow-y-auto pr-3 hidden"></div>
 
                             <div class="mt-10 flex gap-4">
-                                <button onclick="generateAnimeCode()" 
+                                <button onclick="saveAnimeToFirebase()" 
                                         class="flex-1 bg-red-600 hover:bg-red-700 py-6 text-lg font-black uppercase tracking-widest rounded-2xl transition">
-                                    GENERATE SUBTITLE CODE
+                                    <button onclick="saveAnimeToFirebase()" ... >
                                 </button>
                                 <button onclick="clearForm()" 
                                         class="px-10 bg-white/10 hover:bg-white/20 py-6 rounded-2xl font-bold transition">
@@ -265,6 +265,58 @@
     </div>
 </div>
 <script src="data.js"></script>
+<!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  // ඔයාගේ Config එක
+  const firebaseConfig = {
+    apiKey: "AIzaSyAyJ_0zejX0Nu8RHiaQh-bKGFbyRY08q8g",
+    authDomain: "anime-sub-haven.firebaseapp.com",
+    projectId: "anime-sub-haven",
+    storageBucket: "anime-sub-haven.firebasestorage.app",
+    messagingSenderId: "1012100458637",
+    appId: "1:1012100458637:web:c3e780fc84d997e5ff5ac4"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+window.saveAnimeToFirebase = async function() { 
+    
+    console.log("Button Clicked!"); // මේක දාගත්තොත් වැඩේ ලේසියි
+
+    const title = document.getElementById('upName').value;
+    const desc = document.getElementById('upDesc').value;
+    const date = document.getElementById('upDate').value;
+    const season = document.getElementById('upSeason').value;
+    const episode = document.getElementById('upEpisode').value;
+
+    if(!title) { 
+        alert("නමක් ඇතුළත් කරන්න!"); 
+        return; 
+    }
+
+    try {
+        const docRef = await addDoc(collection(db, "Animes"), {
+            title: title,
+            description: desc,
+            releaseDate: date,
+            season: season,
+            totalEpisodes: episode,
+            createdAt: serverTimestamp()
+        });
+        
+        alert("සාර්ථකව ඩේටාබේස් එකට ඇතුළත් කළා! ✅");
+        if(typeof clearForm === 'function') clearForm(); 
+        
+    } catch (e) {
+        console.error("Error: ", e);
+        alert("අවුලක් වුණා: " + e.message);
+    }
+};
+</script>
 <script src="script.js"></script>
 </body>
 </html>
