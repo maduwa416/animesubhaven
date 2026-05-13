@@ -10,43 +10,27 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-black text-white font-['Inter']">
+
 <!-- Telegram Floating Button -->
-<a href="https://t.me/animesubhaven" target="_blank" style="
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    z-index: 1000;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    background: #24A1DE;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 50px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 900;
-    font-size: 12px;
-    text-transform: uppercase;
-    text-decoration: none;
-    letter-spacing: 1px;
-    box-shadow: 0 0 20px rgba(36, 161, 222, 0.5);
-    transition: all 0.3s ease;
-" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 0 30px rgba(36, 161, 222, 0.8)';" 
-  onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 0 20px rgba(36, 161, 222, 0.5)';"
-  class="tg-btn">
+<a href="https://t.me/animesubhaven" target="_blank" class="tg-btn" id="tg-floating-btn">
     <span class="tg-text">Join Telegram Channel</span>
-    <i class="fab fa-telegram-plane" style="font-size: 20px;"></i>
+    <i class="fab fa-telegram-plane"></i>
 </a>
 
 <div id="main-ui" class="hero-bg min-h-screen">
     <!-- Navigation -->
-    <nav class="nav-glass px-8 py-6 flex justify-between items-center border-b border-white/10 sticky top-0 z-50">
-        <div class="flex items-center gap-10">
-            <div class="logo cursor-pointer text-red-600 font-black tracking-widest text-2xl" onclick="showPage('home')" style="text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);">ANIME SUB HAVEN</div>
-            <div class="hidden md:flex gap-8 text-[11px] font-bold uppercase tracking-widest">
+    <nav class="nav-glass px-4 md:px-8 py-6 flex justify-between items-center border-b border-white/10 sticky top-0 z-50">
+        <div class="flex items-center justify-between w-full md:justify-start md:gap-10">
+            <!-- Logo -->
+            <div class="logo cursor-pointer text-red-600 font-black tracking-widest text-lg md:text-2xl" onclick="showPage('home')" style="text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);">
+                ANIME SUB HAVEN
+            </div>
+            
+            <!-- Menu Items -->
+            <div class="flex gap-4 md:gap-8 text-[9px] md:text-[11px] font-bold uppercase tracking-widest">
                 <a href="javascript:void(0)" onclick="showPage('leaderboard')" class="hover:text-red-500 transition">Leaderboard</a>
                 <a href="javascript:void(0)" onclick="showPage('latest')" class="hover:text-red-500 transition">Latest</a>
-                <a href="javascript:void(0)" onclick="showPage('requests')" class="hover:text-red-500 transition">Requests</a>
+                <a href="javascript:void(0)" onclick="showPage('requests')" class="hover:text-red-500 transition hidden md:block">Requests</a>
             </div>
         </div>
     </nav>
@@ -54,7 +38,7 @@
     <main class="p-6 md:p-10">
         <!-- HOME PAGE -->
         <section id="home-page" class="flex flex-col justify-center h-[60vh]">
-            <h1 class="text-4xl md:text-6xl font-black mb-4 leading-tight uppercase">
+            <h1 class="text-3xl md:text-6xl font-black mb-4 leading-tight uppercase">
                 Find Subtitles for <br><span id="typewriter" class="text-red-600" style="text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);"></span>
             </h1>
             <div class="relative mt-8 max-w-2xl">
@@ -68,7 +52,7 @@
 
         <!-- LATEST / SEARCH PAGE -->
         <section id="latest-page" class="hidden">
-            <h2 class="section-title text-3xl font-black uppercase mb-10">Subtitles Library</h2>
+            <h2 class="section-title text-2xl md:text-3xl font-black uppercase mb-10">Subtitles Library</h2>
             <div id="latest-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
             <div id="not-found" class="hidden text-center py-10 flex flex-col items-center justify-center w-full"></div>
         </section>
@@ -83,14 +67,14 @@
         <!-- ADMIN PANEL -->
         <section id="leaderboard-page" class="hidden">
             <div class="flex justify-between items-center mb-10">
-                <h2 class="section-title text-3xl font-black uppercase tracking-tighter">Admin Panel</h2>
-                <button onclick="showStatusPage()" class="bg-white/10 hover:bg-red-600 border border-white/20 px-4 py-2 rounded-lg text-[10px] font-bold tracking-widest transition-all">
-                    <i class="fas fa-chart-line mr-2"></i> STATUS VIEWS
+                <h2 class="section-title text-xl md:text-3xl font-black uppercase tracking-tighter">Admin Panel</h2>
+                <button onclick="showStatusPage()" class="bg-white/10 hover:bg-red-600 border border-white/20 px-3 py-2 rounded-lg text-[9px] font-bold tracking-widest transition-all">
+                    <i class="fas fa-chart-line mr-2"></i> STATUS
                 </button>
             </div>
 
-            <div class="bg-black/60 backdrop-blur-md p-8 rounded-3xl border border-white/10 shadow-2xl">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-black/60 backdrop-blur-md p-6 md:p-8 rounded-3xl border border-white/10 shadow-2xl">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-8">
                     <input type="text" id="upName" placeholder="Anime Name" class="bg-white/5 p-4 rounded-xl border border-white/10 w-full outline-none focus:border-red-600">
                     <input type="text" id="upSeason" placeholder="Season" class="bg-white/5 p-4 rounded-xl border border-white/10 w-full outline-none focus:border-red-600">
                     <input type="date" id="upDate" class="bg-white/5 p-4 rounded-xl border border-white/10 w-full outline-none focus:border-red-600">
@@ -118,29 +102,28 @@
         <section id="status-page" class="hidden">
             <div class="flex items-center gap-4 mb-8">
                 <button onclick="showPage('leaderboard')" class="text-gray-500 hover:text-white"><i class="fas fa-arrow-left"></i></button>
-                <h2 class="text-3xl font-black uppercase tracking-tighter">Site Statistics</h2>
+                <h2 class="text-2xl md:text-3xl font-black uppercase tracking-tighter">Site Statistics</h2>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 text-center">
                 <div class="bg-black/60 border border-white/10 p-8 rounded-3xl shadow-2xl">
                     <i class="fas fa-tv text-red-600 text-3xl mb-4"></i>
                     <h3 class="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Total Anime</h3>
-                    <p id="stat-total-anime" class="text-5xl font-black mt-2 tracking-tighter">0</p>
+                    <p id="stat-total-anime" class="text-4xl md:text-5xl font-black mt-2 tracking-tighter">0</p>
                 </div>
                 <div class="bg-black/60 border border-white/10 p-8 rounded-3xl shadow-2xl">
                     <i class="fas fa-closed-captioning text-red-600 text-3xl mb-4"></i>
                     <h3 class="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Total Subtitles</h3>
-                    <p id="stat-total-subs" class="text-5xl font-black mt-2 tracking-tighter">0</p>
+                    <p id="stat-total-subs" class="text-4xl md:text-5xl font-black mt-2 tracking-tighter">0</p>
                 </div>
                 <div class="bg-black/60 border border-white/10 p-8 rounded-3xl shadow-2xl">
                     <i class="fas fa-users text-red-600 text-3xl mb-4"></i>
                     <h3 class="text-gray-400 text-[10px] font-bold uppercase tracking-widest">Site Traffic</h3>
-                    <p class="text-5xl font-black mt-2 tracking-tighter">LIVE</p>
-                    <span class="text-[9px] text-green-500 font-black uppercase">Monitoring On</span>
+                    <p class="text-4xl md:text-5xl font-black mt-2 tracking-tighter">LIVE</p>
                 </div>
             </div>
 
-            <div class="bg-black/60 border border-white/10 p-8 rounded-3xl shadow-2xl">
+            <div class="bg-black/60 border border-white/10 p-6 md:p-8 rounded-3xl shadow-2xl">
                 <h3 class="text-[11px] font-black uppercase mb-6 border-b border-white/10 pb-4 tracking-widest">Recent Upload History</h3>
                 <div id="status-history" class="space-y-4"></div>
             </div>
@@ -159,13 +142,3 @@
 <script src="script.js"></script>
 </body>
 </html>
-
-<!-- Telegram Floating Button -->
-<a href="https://t.me/animesubhaven" target="_blank" 
-   style="position: fixed; bottom: 25px; right: 25px; z-index: 1000; display: flex; align-items: center; gap: 12px; background: #24A1DE; color: white; padding: 12px 22px; border-radius: 50px; font-family: 'Inter', sans-serif; font-weight: 900; font-size: 11px; text-transform: uppercase; text-decoration: none; letter-spacing: 1.5px; box-shadow: 0 10px 25px rgba(36, 161, 222, 0.4); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);"
-   onmouseover="this.style.transform='scale(1.1) translateY(-5px)'; this.style.boxShadow='0 15px 35px rgba(36, 161, 222, 0.6)';"
-   onmouseout="this.style.transform='scale(1) translateY(0)'; this.style.boxShadow='0 10px 25px rgba(36, 161, 222, 0.4)';"
-   id="tg-floating-btn">
-    <span>Join Telegram Channel</span>
-    <i class="fab fa-telegram-plane" style="font-size: 18px;"></i>
-</a>

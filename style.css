@@ -1,3 +1,5 @@
+/* --- දැනට තියෙන ඔයාගේ පරණ CSS ටික --- */
+
 .hero-bg {
     background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), 
                       url('astablackclover.jpg'); 
@@ -7,40 +9,109 @@
     min-height: 100vh;
 }
 
-/* --- අකුරු වලට Neon Red Glow එකක් දෙමු --- */
 .text-yellow-500 {
-    color: #ff0000 !important; /* රතු පාට */
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.7); /* Red Glow */
+    color: #ff0000 !important; 
+    text-shadow: 0 0 10px rgba(255, 0, 0, 0.7); 
 }
 
-/* --- Buttons රතු කරමු --- */
 .bg-yellow-500 {
-    background-color: #b91c1c !important; /* Crimson Red */
+    background-color: #b91c1c !important; 
     color: white !important;
     box-shadow: 0 0 15px rgba(185, 28, 28, 0.4);
     transition: 0.3s;
 }
 
 .bg-yellow-500:hover {
-    background-color: #ef4444 !important; /* Bright Red */
+    background-color: #ef4444 !important; 
     box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
     transform: scale(1.02);
 }
 
-/* --- Search Bar එකේ Border එක --- */
 #searchInput:focus {
     border: 2px solid #ff0000;
     box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
 }
 
-/* --- Scrollbar එකත් රතු කරමු --- */
 .custom-scrollbar::-webkit-scrollbar-thumb {
     background: #b91c1c;
     box-shadow: 0 0 10px rgba(185, 28, 28, 0.5);
 }
 
-/* --- Cards Hover කරද්දී Glow වෙන්න --- */
 .group:hover {
     border-color: rgba(255, 0, 0, 0.5) !important;
     background: rgba(255, 0, 0, 0.05) !important;
+}
+
+/* --- අලුතින් එකතු කළ Telegram Button & Header Responsive CSS --- */
+
+/* Telegram Button Base (PC එකට) */
+.tg-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #24A1DE;
+    color: white !important;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 12px;
+    box-shadow: 0 10px 25px rgba(36, 161, 222, 0.4);
+    transition: all 0.3s ease;
+}
+
+/* Header එක Sticky කරලා Mobile වලට ඉඩ හදමු */
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(8px);
+}
+
+/* Mobile & Tablet එකට වෙනස් කරන කොටස */
+@media (max-width: 768px) {
+    /* Header එකේ නමයි මෙනුයි එක පෙළට තියන්න */
+    header .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    /* නම (Logo) පොඩි කරමු */
+    header h1 {
+        font-size: 1.1rem !important;
+    }
+
+    /* මෙනු එකේ අකුරු පොඩි කරමු */
+    header nav ul {
+        gap: 10px !important;
+    }
+
+    header nav a {
+        font-size: 10px !important;
+    }
+
+    /* ෆෝන් එකේදී Telegram Button එකේ අකුරු Hide කරමු */
+    .tg-text {
+        display: none;
+    }
+
+    .tg-btn {
+        padding: 12px;
+        bottom: 20px;
+        right: 20px;
+        border-radius: 50%; /* රවුමක් වගේ පේන්න */
+    }
+
+    .tg-btn i {
+        font-size: 22px;
+        margin: 0;
+    }
 }
