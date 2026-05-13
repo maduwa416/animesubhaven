@@ -99,35 +99,46 @@ function handleSearch(e) {
         renderLatest(q);
     }
 }
-
-function renderLatest(filter = "") {
+async function renderLatest(filter = "") {
     const list = document.getElementById('latest-list');
     const notFound = document.getElementById('not-found');
     if (!list) return;
 
-    list.innerHTML = "";
-    const results = window.animeData.filter(s => s.name.toLowerCase().includes(filter));
+    list.innerHTML = `<p class="text-center text-gray-500 py-10 col-span-full italic animate-pulse">Loading Anime Library...</p>`;
 
-    if (results.length === 0) {
-        notFound.classList.remove('hidden');
-        notFound.innerHTML = `
-            <div class="bg-black/60 border border-white/10 p-10 rounded-3xl inline-block max-w-lg shadow-2xl">
-                <i class="fas fa-ghost text-5xl text-red-600 mb-6"></i>
-                <h2 class="text-2xl font-black mb-4 uppercase">Anime Not Found!</h2>
-                <button onclick="showPage('requests')" class="bg-red-700 text-white px-10 py-4 rounded-xl font-black hover:bg-red-600 transition shadow-xl">REQUEST NOW</button>
-            </div>`;
-        return;
+    try {
+        // මෙතන orderBy එක "createdAt" කරන්න
+        const querySnapshot = await db.collection("Animes").orderBy("createdAt", "desc").get();
+        list.innerHTML = "";
+        let foundAny = false;
+
+        querySnapshot.forEach((doc) => {
+            const s = doc.data();
+            const animeId = doc.id;
+
+            // මෙතන s.name වෙනුවට s.title පාවිච්චි කරන්න (Firebase එකේ තියෙන නම)
+            const animeName = s.title || s.name || "Unknown Anime";
+
+            if (animeName.toLowerCase().includes(filter)) {
+                foundAny = true;
+                list.innerHTML += `
+                    <div onclick="window.location.href='anime-details.html?id=${animeId}'" 
+                         class="bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-red-600/50 cursor-pointer transition-all group">
+                        <h3 class="text-xl font-black uppercase group-hover:text-red-500 tracking-tighter">${animeName}</h3>
+                        <p class="text-[10px] text-gray-500 mt-2 font-bold uppercase tracking-widest">Season ${s.season} • ${s.releaseDate}</p>
+                    </div>`;
+            }
+        });
+
+        if (!foundAny) {
+            notFound.classList.remove('hidden');
+        } else {
+            notFound.classList.add('hidden');
+        }
+    } catch (error) {
+        console.error("Firebase Error:", error);
+        list.innerHTML = `<p class="text-red-500 text-center col-span-full">Error: ${error.message}</p>`;
     }
-
-    notFound.classList.add('hidden');
-    results.forEach(s => {
-        list.innerHTML += `
-            <div onclick="window.location.href='anime-details.html?id=${s.id}'" 
-                 class="bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-red-600/50 cursor-pointer transition-all group">
-                <h3 class="text-xl font-black uppercase group-hover:text-red-500 tracking-tighter">${s.name}</h3>
-                <p class="text-[10px] text-gray-500 mt-2 font-bold uppercase tracking-widest">Season ${s.season} • ${s.releaseDate}</p>
-            </div>`;
-    });
 }
 
 // ====================== GENERATE CODE ======================
