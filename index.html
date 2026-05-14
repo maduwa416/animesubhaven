@@ -12,17 +12,18 @@
 <body class="bg-black text-white font-['Inter']">
 
 <!-- Mobile Menu -->
-<div id="mobileMenu" class="mobile-nav md:hidden uppercase font-black tracking-widest text-sm hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center gap-8">
-    <div class="absolute top-10 right-10 text-4xl cursor-pointer" onclick="toggleMenu()">
+<div id="mobileMenu" class="hidden fixed inset-0 bg-black/95 z-[100] flex flex-col items-center justify-center gap-8 uppercase font-black tracking-widest text-xl md:hidden">
+    <div class="absolute top-10 right-10 text-5xl cursor-pointer" onclick="toggleMenu()">
         <i class="fas fa-times"></i>
     </div>
-    <a href="javascript:void(0)" onclick="showPage('leaderboard'); toggleMenu()" class="hover:text-red-500 text-xl">Leaderboard</a>
-    <a href="javascript:void(0)" onclick="showPage('latest'); toggleMenu()" class="hover:text-red-500 text-xl">Latest</a>
-    <a href="javascript:void(0)" onclick="showPage('requests'); toggleMenu()" class="hover:text-red-500 text-xl">Requests</a>
+    <a href="javascript:void(0)" onclick="showPage('home'); toggleMenu()" class="hover:text-red-500 py-2">Home</a>
+    <a href="javascript:void(0)" onclick="showPage('leaderboard'); toggleMenu()" class="hover:text-red-500 py-2">Leaderboard</a>
+    <a href="javascript:void(0)" onclick="showPage('latest'); toggleMenu()" class="hover:text-red-500 py-2">Latest</a>
+    <a href="javascript:void(0)" onclick="showPage('requests'); toggleMenu()" class="hover:text-red-500 py-2">Requests</a>
 </div>
 
 <!-- Telegram Button -->
-<a href="https://t.me/animesubhaven" target="_blank" class="tg-btn fixed bottom-6 right-6" id="tgBtn">
+<a href="https://t.me/animesubhaven" target="_blank" class="tg-btn fixed bottom-6 right-6 z-40" id="tgBtn">
     <span>Join Telegram</span>
     <i class="fab fa-telegram-plane text-xl"></i>
 </a>
@@ -35,29 +36,17 @@
         </div>
         
         <!-- Desktop Menu -->
-<div class="hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest">
-    <a href="javascript:void(0)" onclick="showPage('home')" class="hover:text-red-500 transition">Home</a>
-    <a href="javascript:void(0)" onclick="showPage('leaderboard')" class="hover:text-red-500 transition">Leaderboard</a>
-    <a href="javascript:void(0)" onclick="showPage('latest')" class="hover:text-red-500 transition">Latest</a>
-    <a href="javascript:void(0)" onclick="showPage('requests')" class="hover:text-red-500 transition">Requests</a>
-</div>
+        <div class="hidden md:flex gap-8 text-sm font-bold uppercase tracking-widest">
+            <a href="javascript:void(0)" onclick="showPage('home')" class="hover:text-red-500 transition">Home</a>
+            <a href="javascript:void(0)" onclick="showPage('leaderboard')" class="hover:text-red-500 transition">Leaderboard</a>
+            <a href="javascript:void(0)" onclick="showPage('latest')" class="hover:text-red-500 transition">Latest</a>
+            <a href="javascript:void(0)" onclick="showPage('requests')" class="hover:text-red-500 transition">Requests</a>
+        </div>
 
         <div class="md:hidden text-3xl cursor-pointer" onclick="toggleMenu()">
             <i class="fas fa-bars"></i>
         </div>
     </nav>
-
-    <!-- Mobile Menu -->
-<div id="mobileMenu" class="hidden md:hidden fixed inset-0 bg-black/95 z-50 flex flex-col items-center justify-center gap-8 uppercase font-black tracking-widest text-xl">
-    <div class="absolute top-10 right-10 text-5xl cursor-pointer" onclick="toggleMenu()">
-        <i class="fas fa-times"></i>
-    </div>
-    
-    <a href="javascript:void(0)" onclick="showPage('home'); toggleMenu()" class="hover:text-red-500 py-2">Home</a>
-    <a href="javascript:void(0)" onclick="showPage('leaderboard'); toggleMenu()" class="hover:text-red-500 py-2">Leaderboard</a>
-    <a href="javascript:void(0)" onclick="showPage('latest'); toggleMenu()" class="hover:text-red-500 py-2">Latest</a>
-    <a href="javascript:void(0)" onclick="showPage('requests'); toggleMenu()" class="hover:text-red-500 py-2">Requests</a>
-</div>
 
     <main class="p-6 md:p-10">
         
@@ -67,20 +56,9 @@
                 <div class="text-center mb-8">
                     <i class="fas fa-shield-alt text-6xl text-red-500 mb-4"></i>
                     <h2 class="text-3xl font-black uppercase">Admin Login</h2>
-                    <p class="text-gray-400 mt-2">Leaderboard Access</p>
                 </div>
-                
-                <input type="password" id="adminPass" 
-                       placeholder="Enter Password"
-                       onkeypress="if(event.key === 'Enter') checkAdmin()"
-                       class="w-full bg-black/60 border border-white/20 p-5 rounded-2xl text-lg outline-none focus:border-red-600 mb-6">
-
-                <button onclick="checkAdmin()" 
-                        class="w-full bg-red-600 hover:bg-red-700 py-5 rounded-2xl font-black uppercase tracking-widest text-lg transition">
-                    ENTER LEADERBOARD
-                </button>
-
-                <p class="text-center text-xs text-gray-500 mt-6">ENTER YOUR FACKING PASSWORD</p>
+                <input type="password" id="adminPass" placeholder="Enter Password" onkeypress="if(event.key === 'Enter') checkAdmin()" class="w-full bg-black/60 border border-white/20 p-5 rounded-2xl text-lg outline-none focus:border-red-600 mb-6">
+                <button onclick="checkAdmin()" class="w-full bg-red-600 hover:bg-red-700 py-5 rounded-2xl font-black uppercase tracking-widest text-lg transition">ENTER LEADERBOARD</button>
             </div>
         </section>
 
@@ -93,9 +71,7 @@
                 <span class="absolute inset-y-0 left-0 flex items-center pl-5 text-gray-500">
                     <i class="fas fa-search"></i>
                 </span>
-                <input type="text" id="searchInput" onkeypress="handleSearch(event)" 
-                       placeholder="Search anime..." 
-                       class="w-full bg-black/40 backdrop-blur-md p-5 pl-14 rounded-2xl text-white font-bold border border-white/10 focus:ring-2 focus:ring-red-600 outline-none">
+                <input type="text" id="searchInput" onkeypress="handleSearch(event)" placeholder="Search anime..." class="w-full bg-black/40 backdrop-blur-md p-5 pl-14 rounded-2xl text-white font-bold border border-white/10 focus:ring-2 focus:ring-red-600 outline-none">
             </div>
         </section>
 
@@ -106,40 +82,34 @@
             <div id="not-found" class="hidden text-center py-10"></div>
         </section>
 
-                <!-- LEADERBOARD / ADMIN PANEL -->
+        <!-- ADMIN PANEL -->
         <section id="leaderboard-page" class="hidden">
-            <!-- Admin Dashboard එක ඇතුළේ කැමති තැනකට දාන්න -->
-<div class="flex justify-end p-4">
-    <div class="relative cursor-pointer" onclick="showRequestsModal()">
-        <!-- Bell Icon -->
-        <i id="notif-bell" class="fas fa-bell text-2xl text-gray-400"></i>
-        <!-- Notification Count Badge -->
-        <span id="notif-count" class="hidden absolute -top-2 -right-2 bg-red-600 text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
-    </div>
-</div>
             <div class="max-w-7xl mx-auto">
                 <div class="flex justify-between items-center mb-8">
                     <div class="flex items-center gap-4">
                         <i class="fas fa-crown text-4xl text-red-500"></i>
                         <h2 class="text-4xl font-black uppercase tracking-widest">ADMIN PANEL</h2>
                     </div>
-                    <button onclick="logoutAdmin()" 
-                            class="px-6 py-3 bg-red-600/20 hover:bg-red-600 text-red-400 rounded-2xl font-bold flex items-center gap-2 transition">
-                        <i class="fas fa-sign-out-alt"></i> LOGOUT
-                    </button>
+                    <div class="flex items-center gap-4">
+                        <div class="relative cursor-pointer mr-4" onclick="showRequestsModal()">
+                            <i id="notif-bell" class="fas fa-bell text-2xl text-gray-400"></i>
+                            <span id="notif-count" class="hidden absolute -top-2 -right-2 bg-red-600 text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+                        </div>
+                        <button onclick="logoutAdmin()" class="px-6 py-3 bg-red-600/20 hover:bg-red-600 text-red-400 rounded-2xl font-bold flex items-center gap-2 transition">
+                            <i class="fas fa-sign-out-alt"></i> LOGOUT
+                        </button>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    
                     <!-- Left Side - Generated Code -->
                     <div class="lg:col-span-4">
                         <div class="bg-black/80 border border-red-500/30 rounded-3xl p-6 h-full">
                             <div class="flex justify-between items-center mb-4">
-                                <h3 class="font-black uppercase text-red-500">Generated Data</h3>
-                                <button onclick="copyToClipboard()" 
-                                        class="bg-red-600 hover:bg-red-700 px-6 py-2.5 rounded-xl text-sm font-bold">COPY CODE</button>
+                                <h3 class="font-black uppercase text-red-500 text-sm">Generated Data</h3>
+                                <button onclick="copyToClipboard()" class="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-xl text-xs font-bold">COPY</button>
                             </div>
-                            <textarea id="finalCode" class="w-full h-[620px] bg-black font-mono text-xs p-5 rounded-2xl border border-white/10 resize-none" readonly></textarea>
+                            <textarea id="finalCode" class="w-full h-[500px] bg-black font-mono text-[10px] p-5 rounded-2xl border border-white/10 resize-none" readonly placeholder="Subtitle code will appear here..."></textarea>
                         </div>
                     </div>
 
@@ -150,24 +120,32 @@
                                 <i class="fas fa-plus"></i> Add New Anime
                             </h3>
                             
-                                                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <label class="block text-xs uppercase tracking-widest mb-2 text-gray-400">Anime Title</label>
                                     <input id="upName" type="text" class="w-full bg-black/70 border border-white/20 p-4 rounded-2xl outline-none focus:border-red-500">
                                 </div>
                                 <div>
-                                    <label class="block text-xs uppercase tracking-widest mb-2 text-gray-400">Description</label>
-                                    <textarea id="upDesc" rows="3" class="w-full bg-black/70 border border-white/20 p-4 rounded-2xl outline-none"></textarea>
-                                </div>
-                                <div>
                                     <label class="block text-xs uppercase tracking-widest mb-2 text-gray-400">Release Date</label>
-                                    <input id="upDate" type="text" placeholder="2025-05-13" class="w-full bg-black/70 border border-white/20 p-4 rounded-2xl">
+                                    <input id="upDate" type="text" placeholder="2025-05-13" class="w-full bg-black/70 border border-white/20 p-4 rounded-2xl outline-none focus:border-red-500">
                                 </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs uppercase tracking-widest mb-2 text-gray-400">Description</label>
+                                    <textarea id="upDesc" rows="2" class="w-full bg-black/70 border border-white/20 p-4 rounded-2xl outline-none focus:border-red-500"></textarea>
+                                </div>
+                                
+<div class="md:col-span-1">
+    <label class="block text-xs uppercase tracking-widest mb-2 text-gray-400">IMDb Rating</label>
+    <input id="upImdb" type="text" placeholder="E.g. 8.5" class="w-full bg-black/70 border border-white/20 p-4 rounded-2xl outline-none focus:border-red-500 text-white">
+</div>
+<div class="md:col-span-1">
+    <label class="block text-xs uppercase tracking-widest mb-2 text-gray-400">Genre</label>
+    <input id="upGenre" type="text" placeholder="E.g. Action, Fantasy" class="w-full bg-black/70 border border-white/20 p-4 rounded-2xl outline-none focus:border-red-500 text-white">
+</div>
                                 <div>
                                     <label class="block text-xs uppercase tracking-widest mb-2 text-gray-400">Season</label>
                                     <input id="upSeason" type="text" placeholder="01" class="w-full bg-black/70 border border-white/20 p-4 rounded-2xl">
                                 </div>
-                                <!-- නව Episode Box -->
                                 <div>
                                     <label class="block text-xs uppercase tracking-widest mb-2 text-gray-400">Episode (Total)</label>
                                     <input id="upEpisode" type="text" placeholder="24" class="w-full bg-black/70 border border-white/20 p-4 rounded-2xl">
@@ -176,27 +154,19 @@
 
                             <!-- Language Tabs -->
                             <div class="flex mt-10 border-b border-white/10">
-                                <button onclick="switchTab('si')" id="tab-si"
-                                        class="tab-active px-10 py-4 font-bold border-b-4 border-red-600">SINHALA SUBTITLES</button>
-                                <button onclick="switchTab('en')" id="tab-en"
-                                        class="tab-inactive px-10 py-4 font-bold">ENGLISH SUBTITLES</button>
+                                <button onclick="switchTab('si')" id="tab-si" class="px-6 md:px-10 py-4 font-bold border-b-4 border-red-600">SINHALA</button>
+                                <button onclick="switchTab('en')" id="tab-en" class="px-6 md:px-10 py-4 font-bold text-gray-500">ENGLISH</button>
                             </div>
 
                             <!-- Subtitle Input Boxes -->
-                            <div id="si-inputs" class="mt-8 grid grid-cols-2 md:grid-cols-5 gap-4 max-h-[380px] overflow-y-auto pr-3"></div>
-                            <div id="en-inputs" class="mt-8 grid grid-cols-2 md:grid-cols-5 gap-4 max-h-[380px] overflow-y-auto pr-3 hidden"></div>
+                            <div id="si-inputs" class="mt-8 grid grid-cols-2 md:grid-cols-5 gap-4 max-h-[300px] overflow-y-auto pr-3"></div>
+                            <div id="en-inputs" class="mt-8 grid grid-cols-2 md:grid-cols-5 gap-4 max-h-[300px] overflow-y-auto pr-3 hidden"></div>
 
-                            <div class="mt-10 flex gap-4">
-    <button onclick="saveAnimeToFirebase()" 
-            class="flex-1 bg-red-600 hover:bg-red-700 py-6 text-lg font-black uppercase tracking-widest rounded-2xl transition">
-        GENERATE SUBTITLE CODE
-    </button>
-    <button onclick="clearForm()" 
-            class="px-10 bg-white/10 hover:bg-white/20 py-6 rounded-2xl font-bold transition">
-        CLEAR
-    </button>
-</div>
-                                        class="px-10 bg-white/10 hover:bg-white/20 py-6 rounded-2xl font-bold transition">
+                            <div class="mt-10 flex flex-col md:flex-row gap-4">
+                                <button onclick="handleGenerateAndSave()" class="flex-1 bg-red-600 hover:bg-red-700 py-6 text-lg font-black uppercase tracking-widest rounded-2xl transition">
+                                    GENERATE & SAVE TO DB
+                                </button>
+                                <button onclick="clearForm()" class="px-10 bg-white/10 hover:bg-white/20 py-6 rounded-2xl font-bold transition">
                                     CLEAR
                                 </button>
                             </div>
@@ -206,50 +176,29 @@
             </div>
         </section>
 
-    <!-- Generated Code -->
-    <div id="codeDisplay" class="hidden bg-black/80 p-6 rounded-3xl border border-red-500/30">
-        <h4 class="font-bold mb-3">Copy This Code → data.js එකට දාන්න</h4>
-        <textarea id="finalCode" class="w-full h-64 bg-black p-4 rounded-2xl font-mono text-sm" readonly></textarea>
-        <button onclick="copyToClipboard()" 
-                class="mt-4 bg-white text-black px-8 py-3 rounded-2xl font-black">
-            COPY TO CLIPBOARD
-        </button>
-    </div>
-</section>
-<!-- REQUESTS PAGE -->
-<section id="requests-page" class="hidden">
-    <div class="max-w-2xl mx-auto">
-        <div class="text-center mb-12">
-            <h2 class="text-4xl font-black uppercase mb-3">Request Subtitles</h2>
-            <p class="text-gray-400 text-lg">ඔයාට ඕන ඇනිමෙ එකේ සබ් නැත්නම් මෙතනින් ඉල්ලන්න. අපි ඉක්මනට දෙන්නම්!</p>
-        </div>
-
-        <div class="bg-zinc-900/80 border border-white/10 rounded-3xl p-10">
-            <div class="mb-8">
-                <label class="block text-sm uppercase tracking-widest mb-3 text-gray-400">Anime Name</label>
-                <input id="reqAnimeName" type="text" 
-                       class="w-full bg-black/70 border border-white/20 p-5 rounded-2xl text-lg outline-none focus:border-red-500" 
-                       placeholder="උදා: Solo Leveling Season 2">
+        <!-- REQUESTS PAGE -->
+        <section id="requests-page" class="hidden">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-black uppercase mb-3">Request Subtitles</h2>
+                    <p class="text-gray-400">ඔයාට ඕන ඇනිමෙ එකේ සබ් නැත්නම් මෙතනින් ඉල්ලන්න.</p>
+                </div>
+                <div class="bg-zinc-900/80 border border-white/10 rounded-3xl p-10">
+                    <div class="mb-8">
+                        <label class="block text-sm uppercase tracking-widest mb-3 text-gray-400">Anime Name</label>
+                        <input id="reqAnimeName" type="text" class="w-full bg-black/70 border border-white/20 p-5 rounded-2xl text-lg outline-none focus:border-red-500" placeholder="උදා: Solo Leveling">
+                    </div>
+                    <div class="mb-8">
+                        <label class="block text-sm uppercase tracking-widest mb-3 text-gray-400">Season Info</label>
+                        <input id="reqSeason" type="text" class="w-full bg-black/70 border border-white/20 p-5 rounded-2xl text-lg outline-none focus:border-red-500" placeholder="උදා: Season 02">
+                    </div>
+                    <button onclick="submitRequest()" class="w-full bg-red-600 hover:bg-red-700 py-6 rounded-2xl font-black uppercase tracking-widest text-xl transition">SUBMIT REQUEST</button>
+                </div>
             </div>
-
-            <div class="mb-8">
-                <label class="block text-sm uppercase tracking-widest mb-3 text-gray-400">Season / Episode Info</label>
-                <input id="reqSeason" type="text" 
-                       class="w-full bg-black/70 border border-white/20 p-5 rounded-2xl text-lg outline-none focus:border-red-500" 
-                       placeholder="උදා: Season 02 හෝ Episode 12">
-            </div>
-
-            <button onclick="submitRequest()" 
-                    class="w-full bg-red-600 hover:bg-red-700 py-6 rounded-2xl font-black uppercase tracking-widest text-xl transition">
-                SUBMIT REQUEST
-            </button>
-
-            <p class="text-center text-xs text-gray-500 mt-6">අපි ඉක්මනට බලලා සබ් එක දෙන්නම් ✅</p>
-        </div>
-    </div>
-</section>
+        </section>
     </main>
 </div>
+
 <!-- Requests Modal -->
 <div id="requestsModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
     <div class="bg-zinc-900 border border-white/10 w-full max-w-xl rounded-3xl overflow-hidden shadow-2xl">
@@ -257,24 +206,23 @@
             <h3 class="text-xl font-bold uppercase tracking-wider">User Requests 🔔</h3>
             <button onclick="closeRequestsModal()" class="text-gray-400 hover:text-white transition text-2xl">&times;</button>
         </div>
-        
-        <div id="requestList" class="p-6 max-h-[400px] overflow-y-auto space-y-4">
-            <!-- රික්වෙස්ට් ටික මෙතනට JavaScript හරහා වැටෙනවා -->
-        </div>
-
+        <div id="requestList" class="p-6 max-h-[400px] overflow-y-auto space-y-4"></div>
         <div class="p-4 border-t border-white/5 bg-zinc-800/30 flex justify-between">
             <button onclick="clearAllRequests()" class="text-xs text-red-500 hover:underline uppercase font-bold">Clear All</button>
-            <button onclick="closeRequestsModal()" class="bg-white text-black px-6 py-2 rounded-xl font-bold text-sm hover:bg-gray-200 transition">CLOSE</button>
+            <button onclick="closeRequestsModal()" class="bg-white text-black px-6 py-2 rounded-xl font-bold text-sm">CLOSE</button>
         </div>
     </div>
 </div>
+
+<!-- Scripts -->
 <script src="data.js"></script>
-<!-- Firebase SDKs -->
+<script src="script.js"></script>
+
+<!-- Firebase SDK Module -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  // ඔයාගේ Config එක
   const firebaseConfig = {
     apiKey: "AIzaSyAyJ_0zejX0Nu8RHiaQh-bKGFbyRY08q8g",
     authDomain: "anime-sub-haven.firebaseapp.com",
@@ -287,40 +235,32 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-window.saveAnimeToFirebase = async function() { 
-    
-    console.log("Button Clicked!"); // මේක දාගත්තොත් වැඩේ ලේසියි
+  // Function to handle both generation and Firebase saving
+  window.handleGenerateAndSave = async function() {
+      // First, trigger the code generation in script.js
+      if(typeof generateAnimeCode === 'function') {
+          generateAnimeCode();
+      }
 
-    const title = document.getElementById('upName').value;
-    const desc = document.getElementById('upDesc').value;
-    const date = document.getElementById('upDate').value;
-    const season = document.getElementById('upSeason').value;
-    const episode = document.getElementById('upEpisode').value;
+      // Then save basic info to Firebase
+      const title = document.getElementById('upName').value;
+      if(!title) { alert("Anime නම ඇතුළත් කරන්න!"); return; }
 
-    if(!title) { 
-        alert("නමක් ඇතුළත් කරන්න!"); 
-        return; 
-    }
-
-    try {
-        const docRef = await addDoc(collection(db, "Animes"), {
-            title: title,
-            description: desc,
-            releaseDate: date,
-            season: season,
-            totalEpisodes: episode,
-            createdAt: serverTimestamp()
-        });
-        
-        alert("සාර්ථකව ඩේටාබේස් එකට ඇතුළත් කළා! ✅");
-        if(typeof clearForm === 'function') clearForm(); 
-        
-    } catch (e) {
-        console.error("Error: ", e);
-        alert("අවුලක් වුණා: " + e.message);
-    }
-};
+      try {
+          await addDoc(collection(db, "Animes"), {
+              title: title,
+              description: document.getElementById('upDesc').value,
+              releaseDate: document.getElementById('upDate').value,
+              season: document.getElementById('upSeason').value,
+              createdAt: serverTimestamp()
+          });
+          alert("ඩේටාබේස් එකටත් සේව් වුණා! ✅\nදැන් ජෙනරේට් වුණු කෝඩ් එක කොපි කරලා data.js එකට දාන්න.");
+      } catch (e) {
+          console.error("Firebase Error: ", e);
+          alert("DB Save Error: " + e.message);
+      }
+  };
 </script>
-<script src="script.js"></script>
+
 </body>
 </html>

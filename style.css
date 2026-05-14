@@ -1,6 +1,10 @@
 /* --- Base Styles --- */
+:root {
+    --primary-red: #ef4444;
+}
+
 .hero-bg {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.9)), 
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.95)), 
                       url('astablackclover.jpg'); 
     background-size: cover;
     background-position: center;
@@ -10,77 +14,81 @@
 
 /* --- RGB Logo Animation --- */
 @keyframes rgbGlow {
-    0% { color: #ff0000; text-shadow: 0 0 15px #ff0000; }
-    33% { color: #00ff00; text-shadow: 0 0 15px #00ff00; }
-    66% { color: #0000ff; text-shadow: 0 0 15px #0000ff; }
-    100% { color: #ff0000; text-shadow: 0 0 15px #ff0000; }
+    0% { color: #ff0000; text-shadow: 0 0 15px rgba(255, 0, 0, 0.6); }
+    33% { color: #00ff00; text-shadow: 0 0 15px rgba(0, 255, 0, 0.6); }
+    66% { color: #0000ff; text-shadow: 0 0 15px rgba(0, 0, 255, 0.6); }
+    100% { color: #ff0000; text-shadow: 0 0 15px rgba(255, 0, 0, 0.6); }
 }
 
 .rgb-text {
     animation: rgbGlow 6s infinite alternate ease-in-out;
 }
 
-/* --- Mobile Menu (Hamburger) --- */
-.mobile-nav {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 250px;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(15px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 30px;
-    transition: 0.5s ease-in-out;
-    z-index: 2000;
+/* --- Mobile Menu (Refined) --- */
+/* HTML එකේ ID="mobileMenu" එකට මෙය අදාළ වේ */
+#mobileMenu {
+    transition: opacity 0.4s ease-in-out, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.mobile-nav.active {
-    right: 0;
+#mobileMenu:not(.hidden) {
+    display: flex; /* Tailwind hidden එක නැති වුණාම flex වෙනවා */
+    animation: fadeIn 0.3s ease-out;
 }
 
-/* --- Telegram Button --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Telegram Button (Smooth) --- */
 .tg-btn {
-    position: fixed;
-    bottom: 25px;
-    right: 25px;
-    z-index: 1000;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     background: #24A1DE;
     color: white !important;
-    padding: 12px 20px;
+    padding: 14px 24px;
     border-radius: 50px;
     font-weight: 900;
     text-transform: uppercase;
     text-decoration: none;
-    box-shadow: 0 10px 25px rgba(36, 161, 222, 0.4);
-    transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    max-width: 300px;
+    box-shadow: 0 10px 30px rgba(36, 161, 222, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     white-space: nowrap;
-    overflow: hidden;
 }
 
-.tg-btn.compact {
-    max-width: 48px;
-    padding: 12px;
+.tg-btn:hover {
+    transform: scale(1.05) translateY(-3px);
+    box-shadow: 0 15px 40px rgba(36, 161, 222, 0.6);
+    background: #2cb2f5;
 }
 
-.tg-btn.compact span {
-    display: none;
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar {
+    width: 8px;
 }
 
-/* --- Other Custom Styles --- */
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-red);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+}
+
+/* --- Admin Panel Components --- */
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #b91c1c;
-    box-shadow: 0 0 10px rgba(185, 28, 28, 0.5);
+    background: var(--primary-red);
 }
 
-/* Bell Ringing Animation */
+/* Bell Ringing Animation (For Requests) */
 @keyframes ring {
     0% { transform: rotate(0); }
     10% { transform: rotate(15deg); }
@@ -88,11 +96,21 @@
     30% { transform: rotate(10deg); }
     40% { transform: rotate(-10deg); }
     50% { transform: rotate(5deg); }
-    60% { transform: rotate(-5deg); }
     100% { transform: rotate(0); }
 }
 
 .bell-ringing {
-    animation: ring 1s ease-in-out infinite;
-    color: #ef4444 !important; /* රික්වෙස්ට් තිබ්බොත් රතු පාට වෙනවා */
+    animation: ring 0.8s ease-in-out infinite;
+    color: var(--primary-red) !important;
+    filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.6));
+}
+
+/* Anime Card Hover */
+.anime-card {
+    transition: all 0.3s ease;
+}
+
+.anime-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(239, 68, 68, 0.5) !important;
 }

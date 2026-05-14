@@ -6,94 +6,125 @@
     <title>Anime Details | AnimeSubHaven</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #000; color: white; }
         .nav-glass { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(15px); }
         .info-card { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .download-btn { transition: all 0.3s ease; }
+        .download-btn:hover { transform: scale(1.05); }
     </style>
 </head>
 <body>
 
     <!-- Navigation -->
     <nav class="nav-glass px-8 py-6 flex justify-between items-center border-b border-white/10 sticky top-0 z-50">
-        <div class="text-2xl font-black tracking-[0.2em] text-yellow-500 cursor-pointer" onclick="window.location.href='index.html'">
+        <div class="text-2xl font-black tracking-[0.2em] text-red-600 cursor-pointer" onclick="window.location.href='index.html'">
             ANIME SUB HAVEN
         </div>
         <div class="flex gap-8 text-[13px] font-bold uppercase tracking-widest">
-            <a href="index.html" class="hover:text-yellow-500">Home</a>
+            <a href="index.html" class="hover:text-red-500">Home</a>
         </div>
     </nav>
 
-    <main class="p-10 max-w-5xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+    <main class="p-6 md:p-10 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
             
             <!-- Left Side: Basic Info -->
-            <div class="md:col-span-1">
-                <div class="info-card p-6 rounded-2xl">
-                    <h2 id="anime-name" class="text-3xl font-black text-yellow-500 mb-4 uppercase"></h2>
-                    <div class="space-y-3 text-sm">
-                        <p><span class="text-gray-500">YEAR:</span> <span id="anime-year"></span></p>
-                        <p><span class="text-gray-500">SEASON:</span> <span id="anime-season"></span></p>
-                        <p><span class="text-gray-500">IMDb:</span> <span id="anime-imdb" class="text-yellow-500 font-bold"></span></p>
-                        <p><span class="text-gray-500">GENRE:</span> <span id="anime-genre"></span></p>
-                    </div>
+            <div class="lg:col-span-1">
+                <div class="info-card p-8 rounded-3xl sticky top-28">
+                    <!-- මම නම පොඩි කළා සහ Episodes එකතු කළා -->
+<h2 id="anime-name" class="text-2xl font-black text-red-600 mb-6 uppercase leading-tight break-words"></h2>
+<div class="space-y-4 text-sm font-medium">
+    <p class="flex justify-between"><span class="text-gray-500 uppercase">Year:</span> <span id="anime-year"></span></p>
+    <p class="flex justify-between"><span class="text-gray-500 uppercase">Season:</span> <span id="anime-season"></span></p>
+    <p class="flex justify-between"><span class="text-gray-500 uppercase">Episodes:</span> <span id="anime-episodes"></span></p> <!-- 👈 අලුත් පේළිය -->
+    <p class="flex justify-between"><span class="text-gray-500 uppercase">IMDb:</span> <span id="anime-imdb" class="text-yellow-500 font-black text-base"></span></p>
+    <p class="flex flex-col gap-1"><span class="text-gray-500 uppercase">Genre:</span> <span id="anime-genre" class="text-gray-300"></span></p>
+</div>
                 </div>
             </div>
 
             <!-- Right Side: Description & Download -->
-            <div class="md:col-span-2">
-                <h3 class="text-xl font-bold mb-4 uppercase tracking-widest border-b border-yellow-500 w-fit pb-1">Description</h3>
-                <p id="anime-desc" class="text-gray-400 leading-relaxed mb-10"></p>
+            <div class="lg:col-span-2">
+                <div class="mb-12">
+                    <h3 class="text-xl font-black mb-4 uppercase tracking-widest text-red-600">Description</h3>
+                    <p id="anime-desc" class="text-gray-400 leading-relaxed text-lg"></p>
+                </div>
 
-                <h3 class="text-xl font-bold mb-6 uppercase tracking-widest border-b border-yellow-500 w-fit pb-1">Download Subtitles</h3>
-                <div class="info-card rounded-xl overflow-hidden">
-                    <table class="w-full text-left">
-                        <thead class="bg-white/10 text-[10px] font-bold uppercase text-gray-500">
+                <h3 class="text-xl font-black mb-6 uppercase tracking-widest text-red-600">Download Subtitles</h3>
+                <div class="info-card rounded-2xl overflow-hidden border border-white/5">
+                    <table class="w-full text-left border-collapse">
+                        <thead class="bg-white/5 text-[10px] font-black uppercase text-gray-400">
                             <tr>
-                                <th class="p-4">File Name</th>
-                                <th class="p-4 text-center">Action</th>
+                                <th class="p-5">Episode / Language</th>
+                                <th class="p-5 text-center">Download</th>
                             </tr>
                         </thead>
                         <tbody id="download-row">
-                            <!-- Data will load here -->
+                            <!-- JS through dynamically added content -->
                         </tbody>
                     </table>
                 </div>
             </div>
-
         </div>
     </main>
 
-    <!-- Data links -->
     <script src="data.js"></script>
     <script>
-        // URL එකෙන් ID එක ගන්නවා (උදා: ?id=hipe)
         const urlParams = new URLSearchParams(window.location.search);
         const animeId = urlParams.get('id');
-
-        // data.js එකේ තියෙන ලිස්ට් එකෙන් අදාළ ඇනිමේ එක හොයනවා
         const anime = window.animeData.find(item => item.id === animeId);
 
         if (anime) {
             document.getElementById('anime-name').innerText = anime.name;
-            document.getElementById('anime-year').innerText = anime.year || 'N/A';
-            document.getElementById('anime-season').innerText = anime.season || 'N/A';
-            document.getElementById('anime-imdb').innerText = anime.imdb || 'N/A';
-            document.getElementById('anime-genre').innerText = anime.genre || 'N/A';
-            document.getElementById('anime-desc').innerText = anime.description || 'No description available.';
+document.getElementById('anime-year').innerText = anime.releaseDate || 'TBA';
+document.getElementById('anime-season').innerText = anime.season || '01';
+document.getElementById('anime-episodes').innerText = anime.episodes || '??'; // 👈 මේක එකතු කරන්න
+document.getElementById('anime-imdb').innerText = anime.imdb ? '⭐ ' + anime.imdb : 'N/A';
+document.getElementById('anime-genre').innerText = anime.genre || 'Action, Anime';
 
-            // Download Row එක හදනවා
             const row = document.getElementById('download-row');
-            row.innerHTML = `
-                <tr class="border-t border-white/5">
-                    <td class="p-4 text-sm font-medium text-gray-300 uppercase">${anime.name} - Full Pack / Ep</td>
-                    <td class="p-4 text-center">
-                        <a href="${anime.subLink}" target="_blank" class="bg-yellow-500 text-black px-6 py-2 rounded-lg font-black text-xs hover:bg-yellow-400 transition inline-block">DOWNLOAD</a>
-                    </td>
-                </tr>
-            `;
+            let rowsHtml = '';
+
+            // Sinhala Subtitles
+            if (anime.sinhalaSubs && anime.sinhalaSubs.length > 0) {
+                anime.sinhalaSubs.forEach(sub => {
+                    rowsHtml += `
+                        <tr class="border-t border-white/5 hover:bg-white/5 transition">
+                            <td class="p-5">
+                                <div class="font-bold text-sm uppercase">${anime.name} - EP ${sub.ep}</div>
+                                <div class="text-[10px] text-red-500 font-bold uppercase tracking-widest mt-1">Sinhala Subtitle</div>
+                            </td>
+                            <td class="p-5 text-center">
+                                <a href="${sub.url}" target="_blank" class="download-btn bg-red-600 text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase hover:bg-red-700 inline-block shadow-lg shadow-red-600/20">Download</a>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            // English Subtitles
+            if (anime.englishSubs && anime.englishSubs.length > 0) {
+                anime.englishSubs.forEach(sub => {
+                    rowsHtml += `
+                        <tr class="border-t border-white/5 hover:bg-white/5 transition">
+                            <td class="p-5">
+                                <div class="font-bold text-sm uppercase">${anime.name} - EP ${sub.ep}</div>
+                                <div class="text-[10px] text-blue-500 font-bold uppercase tracking-widest mt-1">English Subtitle</div>
+                            </td>
+                            <td class="p-5 text-center">
+                                <a href="${sub.url}" target="_blank" class="download-btn bg-blue-600 text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase hover:bg-blue-700 inline-block shadow-lg shadow-blue-600/20">Download</a>
+                            </td>
+                        </tr>
+                    `;
+                });
+            }
+
+            row.innerHTML = rowsHtml || '<tr><td colspan="2" class="p-10 text-center text-gray-500">No subtitles available yet.</td></tr>';
+
         } else {
-            document.body.innerHTML = `<div class="text-center mt-20"><h1 class="text-2xl font-bold">Anime Not Found!</h1><a href="index.html" class="text-yellow-500 underline">Go Back</a></div>`;
+            document.body.innerHTML = `<div class="flex flex-col items-center justify-center h-screen"><h1 class="text-4xl font-black mb-4">ANIME NOT FOUND!</h1><a href="index.html" class="bg-red-600 px-8 py-3 rounded-2xl font-bold">GO BACK HOME</a></div>`;
         }
     </script>
 </body>
