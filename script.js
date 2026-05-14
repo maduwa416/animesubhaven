@@ -304,3 +304,44 @@ function clearAllRequests() {
         console.log("All requests cleared!");
     }
 }
+// Submit Request Function
+function submitRequest() {
+    const nameInput = document.getElementById('reqAnimeName');
+    const seasonInput = document.getElementById('reqSeason');
+
+    if (!nameInput || !seasonInput) return;
+
+    const name = nameInput.value.trim();
+    const season = seasonInput.value.trim();
+
+    if (!name || !season) {
+        alert("කරුණාකර ඇනිමෙ නම සහ සීසන් එක ඇතුළත් කරන්න! ✍️");
+        return;
+    }
+
+    // දැනට තියෙන රික්වෙස්ට් ටික ගන්නවා
+    let requests = JSON.parse(localStorage.getItem('userRequests')) || [];
+
+    // අලුත් රික්වෙස්ට් එක ඇඩ් කරනවා
+    const newRequest = {
+        id: Date.now(),
+        anime: name,
+        season: season,
+        date: new Date().toLocaleDateString()
+    };
+
+    requests.push(newRequest);
+
+    // ආපහු සේව් කරනවා
+    localStorage.setItem('userRequests', JSON.stringify(requests));
+
+    // Input ටික හිස් කරනවා
+    nameInput.value = '';
+    seasonInput.value = '';
+
+    // සාර්ථකයි කියලා මැසේජ් එකක් දානවා
+    showToast("✅ Request එක සාර්ථකව යැව්වා!", "success");
+
+    // බෙල් එකේ අංකය update කරනවා
+    updateNotificationCount();
+}
