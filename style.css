@@ -114,3 +114,23 @@
     transform: translateY(-8px);
     border-color: rgba(239, 68, 68, 0.5) !important;
 }
+.ad-thanks-card {
+    position: fixed; /* ස්ක්‍රීන් එකේ එක තැනක ලොක් කරයි */
+    bottom: 10%;    /* පල්ලෙහා ඉඳන් තියෙන උස (මේක වෙනස් කරලා පල්ලෙහාට/උඩට ගන්න) */
+    
+    /* මැදට ගන්න නියමම ක්‍රමය 👇 */
+    left: 50%;
+    transform: translateX(-50%);
+    
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 25px;
+    border-radius: 12px;
+    z-index: 100;
+    width: fit-content; /* අකුරු ප්‍රමාණයට විතරක් කොටුව හැදේ */
+}
+.ad-thanks-card {
+    pointer-events: none; /* මේකෙන් මැසේජ් එක ක්ලික් වෙන්නේ නැතිව යට තියෙන ඒවා ක්ලික් වෙනවා */
+    z-index: 50; /* මේක Modal එකට (200) වඩා අඩුවෙන් තියෙන්න ඕනේ */
+}

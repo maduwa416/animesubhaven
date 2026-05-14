@@ -1,13 +1,12 @@
 // ====================== INITIALIZATION ======================
-// Anime දත්ත ගබඩා කිරීමට (Database එකක් නැති නිසා දැනට Array එකක් ලෙස)
-window.animeData = window.animeData || []; 
+window.animeData = window.animeData || [];
 
 document.addEventListener("DOMContentLoaded", () => {
     createBoxes('si-inputs', 'si-link');
     createBoxes('en-inputs', 'en-link');
     typeEffect();
     renderLatest();
-    updateBellNotification();
+    updateNotificationCount();
 });
 
 // ====================== ADMIN PANEL BOXES ======================
@@ -27,36 +26,47 @@ function createBoxes(containerId, className) {
 
 // ====================== PAGE NAVIGATION ======================
 function showPage(pageId) {
-    const sections = ['home-page', 'latest-page', 'leaderboard-page', 'requests-page', 'status-page', 'login-page'];
-    
+    const sections = ['home-page', 'latest-page', 'leaderboard-page', 'requests-page', 'login-page'];
+
     sections.forEach(s => {
         const el = document.getElementById(s);
-        if (el) el.classList.add('hidden');
+        // මෙන්න මෙහෙම if (el) කියලා චෙක් කරාම තමයි අර Error එක නවතින්නේ 👇
+        if (el) {
+            el.classList.add('hidden');
+        }
     });
 
     if (pageId === 'leaderboard') {
+        const lbPage = document.getElementById('leaderboard-page');
+        const loginPage = document.getElementById('login-page');
+
         if (localStorage.getItem('adminLoggedIn') === 'true') {
-            document.getElementById('leaderboard-page').classList.remove('hidden');
+            if (lbPage) lbPage.classList.remove('hidden');
         } else {
-            document.getElementById('login-page').classList.remove('hidden');
+            if (loginPage) loginPage.classList.remove('hidden');
         }
     } else {
         const target = document.getElementById(pageId + '-page');
         if (target) target.classList.remove('hidden');
     }
+
+    // අර ad-thanks-message එකටත් safety check එකක් දාමු
+    const thanksMessage = document.getElementById('ad-thanks-message');
+    if (thanksMessage) {
+        thanksMessage.style.display = (pageId === 'home') ? 'table' : 'none';
+    }
 }
 
-// ====================== ADMIN AUTHENTICATION ======================
+// ====================== ADMIN AUTH ======================
 function checkAdmin() {
     const password = document.getElementById('adminPass').value.trim();
     if (password === "maduwa416@gmail.com") {
         localStorage.setItem('adminLoggedIn', 'true');
         document.getElementById('login-page').classList.add('hidden');
         document.getElementById('leaderboard-page').classList.remove('hidden');
-        
-        showToast("✅ Login Successful! Welcome Admin", "success");
+        showToast("✅ Login Successful!", "success");
     } else {
-        alert("❌ Wrong Password! Access Denied.");
+        alert("❌ Wrong Password!");
         document.getElementById('adminPass').value = "";
     }
 }
@@ -68,7 +78,7 @@ function logoutAdmin() {
     }
 }
 
-// ====================== UI INTERACTION (TABS/MENU) ======================
+// ====================== TABS & MENU ======================
 function switchTab(lang) {
     const siIn = document.getElementById('si-inputs');
     const enIn = document.getElementById('en-inputs');
@@ -76,13 +86,11 @@ function switchTab(lang) {
     const enBtn = document.getElementById('tab-en');
 
     if (lang === 'si') {
-        siIn.classList.remove('hidden');
-        enIn.classList.add('hidden');
+        siIn.classList.remove('hidden'); enIn.classList.add('hidden');
         siBtn.classList.add('text-red-500', 'border-b-4', 'border-red-600');
         enBtn.classList.remove('text-red-500', 'border-b-4', 'border-red-600');
     } else {
-        enIn.classList.remove('hidden');
-        siIn.classList.add('hidden');
+        enIn.classList.remove('hidden'); siIn.classList.add('hidden');
         enBtn.classList.add('text-red-500', 'border-b-4', 'border-red-600');
         siBtn.classList.remove('text-red-500', 'border-b-4', 'border-red-600');
     }
@@ -93,7 +101,7 @@ function toggleMenu() {
     if (menu) menu.classList.toggle('hidden');
 }
 
-// ====================== SEARCH & RENDER ======================
+// ====================== SEARCH ======================
 function handleSearch(e) {
     if (e.key === 'Enter') {
         const q = document.getElementById('searchInput').value.toLowerCase().trim();
@@ -112,22 +120,19 @@ function renderLatest(filter = "") {
 
     if (results.length === 0) {
         notFound.classList.remove('hidden');
-        notFound.innerHTML = `
-            <div class="bg-black/60 border border-white/10 p-10 rounded-3xl inline-block max-w-lg shadow-2xl">
-                <i class="fas fa-ghost text-5xl text-red-600 mb-6"></i>
-                <h2 class="text-2xl font-black mb-4 uppercase">Anime Not Found!</h2>
-                <button onclick="showPage('requests')" class="bg-red-700 text-white px-10 py-4 rounded-xl font-black hover:bg-red-600 transition shadow-xl">REQUEST NOW</button>
-            </div>`;
+        notFound.innerHTML = `<div class="bg-black/60 border border-white/10 p-10 rounded-3xl inline-block max-w-lg shadow-2xl text-center">
+            <i class="fas fa-ghost text-5xl text-red-600 mb-6"></i>
+            <h2 class="text-2xl font-black mb-4">Anime Not Found!</h2>
+        </div>`;
         return;
     }
 
     notFound.classList.add('hidden');
     results.forEach(s => {
         list.innerHTML += `
-            <div onclick="window.location.href='anime-details.html?id=${s.id}'" 
-                 class="bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-red-600/50 cursor-pointer transition-all group">
-                <h3 class="text-xl font-black uppercase group-hover:text-red-500 tracking-tighter">${s.name}</h3>
-                <p class="text-[10px] text-gray-500 mt-2 font-bold uppercase tracking-widest">Season ${s.season} • ${s.releaseDate}</p>
+            <div onclick="window.location.href='anime-details.html?id=${s.id}'" class="bg-black/40 backdrop-blur-md p-6 rounded-2xl border border-white/10 hover:border-red-600/50 cursor-pointer transition-all group">
+                <h3 class="text-xl font-black uppercase group-hover:text-red-500">${s.name}</h3>
+                <p class="text-[10px] text-gray-500 mt-2">Season ${s.season} • ${s.releaseDate}</p>
             </div>`;
     });
 }
@@ -138,25 +143,15 @@ function generateAnimeCode() {
     if (!name) { alert("Anime නම ඇතුලත් කරන්න!"); return; }
 
     const id = name.toLowerCase().replace(/\s+/g, '-');
-    
-    // IMDb සහ Genre අගයන් මෙතනින් ගන්නවා
-    const imdbVal = document.getElementById('upImdb').value.trim() || 'N/A';
-    const genreVal = document.getElementById('upGenre').value.trim() || 'Action, Anime';
-
-    const extract = (className) => {
-        return Array.from(document.getElementsByClassName(className))
-            .map((el, i) => ({ ep: i + 1, url: el.value.trim() }))
-            .filter(item => item.url !== "");
-    };
+    const extract = (className) => Array.from(document.getElementsByClassName(className))
+        .map((el, i) => ({ ep: i + 1, url: el.value.trim() }))
+        .filter(item => item.url !== "");
 
     const code = `{
     id: "${id}",
     name: "${name}",
     season: "${document.getElementById('upSeason').value}",
     releaseDate: "${document.getElementById('upDate').value}",
-    imdb: "${imdbVal}",
-    genre: "${genreVal}",
-    episodes: "${document.getElementById('upEp') ? document.getElementById('upEp').value : '??'}",
     description: "${document.getElementById('upDesc').value.replace(/\n/g, ' ')}",
     sinhalaSubs: ${JSON.stringify(extract('si-link'), null, 8)},
     englishSubs: ${JSON.stringify(extract('en-link'), null, 8)},
@@ -167,71 +162,61 @@ function generateAnimeCode() {
     document.getElementById('codeDisplay').classList.remove('hidden');
 }
 
-function copyToClipboard() {
-    const textarea = document.getElementById('finalCode');
-    textarea.select();
-    document.execCommand('copy');
-    alert("✅ Code Copied to Clipboard!");
-}
+// ====================== FIREBASE SAVE ======================
+window.handleGenerateAndSave = async function() {
+    const name = document.getElementById('upName').value.trim();
+    if (!name) {
+        alert("Anime නම ඇතුලත් කරන්න!");
+        return;
+    }
 
-function clearForm() {
-    document.getElementById('upImdb').value = '';
-    document.getElementById('upGenre').value = '';
-    document.getElementById('upName').value = '';
-    document.getElementById('upSeason').value = '';
-    document.getElementById('upDate').value = '';
-    document.getElementById('upDesc').value = '';
-    document.getElementById('finalCode').value = '';
-    document.getElementById('codeDisplay').classList.add('hidden');
-}
+    generateAnimeCode(); // කෝඩ් ජෙනරේට් කරනවා
 
-// ====================== REQUEST SYSTEM ======================
+    try {
+        await addDoc(collection(db, "animes"), {
+            name: name,
+            season: document.getElementById('upSeason').value || "",
+            releaseDate: document.getElementById('upDate').value || "",
+            description: document.getElementById('upDesc').value || "",
+            createdAt: serverTimestamp()
+        });
+
+        alert("✅ සාර්ථකව Firebase එකට සේව් වුණා!");
+    } catch (error) {
+        console.error(error);
+        alert("Firebase සේව් වෙන්නේ නැහැ: " + error.message);
+    }
+};
+
+// ====================== REQUESTS ======================
 function submitRequest() {
-    const name = document.getElementById('reqAnimeName').value.trim();
-    const season = document.getElementById('reqSeason').value.trim();
-
-    if (!name) { alert("ඇනිමෙ නම ඇතුලත් කරන්න!"); return; }
-
-    let requests = JSON.parse(localStorage.getItem('userRequests')) || [];
-    requests.push({
-        id: Date.now(),
-        anime: name,
-        season: season || "Not Specified",
-        time: new Date().toLocaleString('si-LK')
-    });
-    localStorage.setItem('userRequests', JSON.stringify(requests));
-
-    alert("✅ ඔයාගේ Request එක සාර්ථකව ලැබුණා!");
-    document.getElementById('reqAnimeName').value = '';
-    document.getElementById('reqSeason').value = '';
-    updateBellNotification(); 
+    // ... ඔයාගේ පෙර තිබුණු submitRequest function එකම තියෙන්න දෙන්න
+    // (ඔයාගේ කෝඩ් එකේ තිබුණු එකම තියෙන්න)
 }
 
-function updateBellNotification() {
-    const requests = JSON.parse(localStorage.getItem('userRequests')) || [];
-    const bell = document.getElementById('notif-bell');
-    const badge = document.getElementById('notif-count');
-
+// ====================== NOTIFICATIONS ======================
+function updateNotificationCount() {
+    const countEl = document.getElementById('notif-count');
+    let requests = JSON.parse(localStorage.getItem('userRequests')) || [];
     if (requests.length > 0) {
-        if(bell) bell.classList.add('bell-ringing'); 
-        if(badge) {
-            badge.classList.remove('hidden');
-            badge.innerText = requests.length;
-        }
+        countEl.textContent = requests.length;
+        countEl.classList.remove('hidden');
     } else {
-        if(bell) bell.classList.remove('bell-ringing');
-        if(badge) badge.classList.add('hidden');
+        countEl.classList.add('hidden');
     }
 }
 
 function showRequestsModal() {
     const modal = document.getElementById('requestsModal');
-    const listContainer = document.getElementById('requestList');
-    const requests = JSON.parse(localStorage.getItem('userRequests')) || [];
+    const listContainer = document.getElementById('requestList'); // HTML එකේ තියෙන ID එකට සමාන විය යුතුයි
+    
+    if (!modal || !listContainer) return; // ID එක නැත්නම් මෙතනින් නතර වෙනවා
 
-    listContainer.innerHTML = ''; 
+    const requests = JSON.parse(localStorage.getItem('userRequests')) || [];
+    
+    listContainer.innerHTML = '';
     if (requests.length === 0) {
-        listContainer.innerHTML = '<p class="text-center text-gray-500 py-10">තාම රික්වෙස්ට් මුකුත් නෑ මචං! 😴</p>';
+        listContainer.innerHTML = '<p class="text-center text-gray-500 py-10">තවම රික්වෙස්ට් මුකුත් නෑ මචං! 😴</p>';
     } else {
         [...requests].reverse().forEach(req => {
             const item = document.createElement('div');
@@ -240,7 +225,6 @@ function showRequestsModal() {
                 <div>
                     <h4 class="text-red-500 font-bold uppercase text-sm">${req.anime}</h4>
                     <p class="text-xs text-gray-400 mt-1">${req.season}</p>
-                    <span class="text-[10px] text-gray-600 block mt-2 italic">${req.time}</span>
                 </div>`;
             listContainer.appendChild(item);
         });
@@ -248,16 +232,13 @@ function showRequestsModal() {
     modal.classList.remove('hidden');
 }
 
-function closeRequestsModal() {
-    document.getElementById('requestsModal').classList.add('hidden');
-}
-
-function clearAllRequests() {
-    if(confirm("මචං, සේරම රික්වෙස්ට් ටික මකන්නද?")) {
-        localStorage.removeItem('userRequests');
-        updateBellNotification();
-        showRequestsModal();
-    }
+// ====================== HELPERS ======================
+function showToast(text, type = "success") {
+    const msg = document.createElement('div');
+    msg.className = `fixed top-6 left-1/2 -translate-x-1/2 ${type === 'success' ? 'bg-green-600' : 'bg-red-600'} text-white px-8 py-4 rounded-2xl font-bold shadow-2xl z-[100]`;
+    msg.textContent = text;
+    document.body.appendChild(msg);
+    setTimeout(() => msg.remove(), 2500);
 }
 
 // ====================== EFFECTS & HELPERS ======================
@@ -290,4 +271,36 @@ function showToast(text, type) {
     msg.textContent = text;
     document.body.appendChild(msg);
     setTimeout(() => msg.remove(), 2500);
+}
+// මේ කෝඩ් එක script.js එකේ අන්තිමටම පේස්ට් කරන්න
+function closeRequestsModal() {
+    const modal = document.getElementById('requestsModal');
+    if (modal) {
+        modal.classList.add('hidden');
+        console.log("Modal closed correctly!"); 
+    }
+}
+// මේක script.js එකේ අන්තිමටම දාන්න
+function clearAllRequests() {
+    // පරිශීලකයාගෙන් අහනවා ඇත්තටම මකන්න ඕනෙද කියලා
+    if (confirm("ඔක්කොම Requests ටික මකන්නද? මේක ආපහු ගන්න බැහැ!")) {
+        
+        // LocalStorage එකේ තියෙන data මකනවා
+        localStorage.removeItem('userRequests');
+        
+        // බෙල් එකේ අංකය (Notification Count) බිංදු කරනවා
+        const countEl = document.getElementById('notif-count');
+        if (countEl) {
+            countEl.textContent = '0';
+            countEl.classList.add('hidden');
+        }
+        
+        // දැන් Modal එක ඇතුළේ තියෙන ලිස්ට් එක හිස් කරලා පෙන්වන්න
+        const listContainer = document.getElementById('requestList');
+        if (listContainer) {
+            listContainer.innerHTML = '<p class="text-center text-gray-500 py-10">ඔක්කොම මැකුවා මචං! 🧹</p>';
+        }
+        
+        console.log("All requests cleared!");
+    }
 }

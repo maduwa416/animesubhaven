@@ -74,7 +74,9 @@
                 <input type="text" id="searchInput" onkeypress="handleSearch(event)" placeholder="Search anime..." class="w-full bg-black/40 backdrop-blur-md p-5 pl-14 rounded-2xl text-white font-bold border border-white/10 focus:ring-2 focus:ring-red-600 outline-none">
             </div>
         </section>
-
+<div id="ad-thanks-message" class="ad-thanks-card">
+    <p>Every ad you watch helps me grow. <span>Thank you!</span></p>
+</div>
         <!-- LATEST PAGE -->
         <section id="latest-page" class="hidden">
             <h2 class="text-3xl font-black uppercase mb-10">Subtitles Library</h2>
@@ -92,9 +94,9 @@
                     </div>
                     <div class="flex items-center gap-4">
                         <div class="relative cursor-pointer mr-4" onclick="showRequestsModal()">
-                            <i id="notif-bell" class="fas fa-bell text-2xl text-gray-400"></i>
-                            <span id="notif-count" class="hidden absolute -top-2 -right-2 bg-red-600 text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
-                        </div>
+    <i id="notif-bell" class="fas fa-bell text-2xl text-gray-400"></i>
+    <span id="notif-count" class="hidden ...">0</span>
+</div>
                         <button onclick="logoutAdmin()" class="px-6 py-3 bg-red-600/20 hover:bg-red-600 text-red-400 rounded-2xl font-bold flex items-center gap-2 transition">
                             <i class="fas fa-sign-out-alt"></i> LOGOUT
                         </button>
@@ -218,49 +220,28 @@
 <script src="data.js"></script>
 <script src="script.js"></script>
 
-<!-- Firebase SDK Module -->
+<!-- Firebase SDK -->
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyAyJ_0zejX0Nu8RHiaQh-bKGFbyRY08q8g",
-    authDomain: "anime-sub-haven.firebaseapp.com",
-    projectId: "anime-sub-haven",
-    storageBucket: "anime-sub-haven.firebasestorage.app",
-    messagingSenderId: "1012100458637",
-    appId: "1:1012100458637:web:c3e780fc84d997e5ff5ac4"
-  };
+    const firebaseConfig = {
+      apiKey: "AIzaSyAyJ_0zejX0Nu8RHiaQh-bKGFbyRY08q8g",
+      authDomain: "anime-sub-haven.firebaseapp.com",
+      projectId: "anime-sub-haven",
+      storageBucket: "anime-sub-haven.firebasestorage.app",
+      messagingSenderId: "1012100458637",
+      appId: "1:1012100458637:web:a69de96cae86708bff5ac4"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  // Function to handle both generation and Firebase saving
-  window.handleGenerateAndSave = async function() {
-      // First, trigger the code generation in script.js
-      if(typeof generateAnimeCode === 'function') {
-          generateAnimeCode();
-      }
-
-      // Then save basic info to Firebase
-      const title = document.getElementById('upName').value;
-      if(!title) { alert("Anime නම ඇතුළත් කරන්න!"); return; }
-
-      try {
-          await addDoc(collection(db, "Animes"), {
-              title: title,
-              description: document.getElementById('upDesc').value,
-              releaseDate: document.getElementById('upDate').value,
-              season: document.getElementById('upSeason').value,
-              createdAt: serverTimestamp()
-          });
-          alert("ඩේටාබේස් එකටත් සේව් වුණා! ✅\nදැන් ජෙනරේට් වුණු කෝඩ් එක කොපි කරලා data.js එකට දාන්න.");
-      } catch (e) {
-          console.error("Firebase Error: ", e);
-          alert("DB Save Error: " + e.message);
-      }
-  };
+    // Global විදිහට භාවිතා කරන්න
+    window.db = db;
+    window.collection = collection;
+    window.addDoc = addDoc;
+    window.serverTimestamp = serverTimestamp;
 </script>
-
 </body>
 </html>
