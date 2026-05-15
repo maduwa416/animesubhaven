@@ -97,14 +97,14 @@ if (anime.sinhalaSubs && anime.sinhalaSubs.length > 0) {
                     <div class="text-[10px] text-red-500 font-bold uppercase tracking-widest mt-1">Sinhala Subtitle</div>
                 </td>
                 <td class="p-5 text-center">
-                    <a href="${sub.url}" onclick="window.open('https://omg10.com/4/11009681', '_blank');" target="_blank" class="download-btn bg-red-600 text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase hover:bg-red-700 inline-block shadow-lg shadow-red-600/20">Download</a>
+                    <button onclick="downloadWithAd('${sub.url}')" class="download-btn bg-red-600 text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase hover:bg-red-700 inline-block shadow-lg shadow-red-600/20">Download</button>
                 </td>
             </tr>
         `;
     });
 }
 
-// English Subtitles
+// English Subtitles (මේකත් ඒ විදිහටම මාරු කරන්න)
 if (anime.englishSubs && anime.englishSubs.length > 0) {
     anime.englishSubs.forEach(sub => {
         rowsHtml += `
@@ -114,7 +114,7 @@ if (anime.englishSubs && anime.englishSubs.length > 0) {
                     <div class="text-[10px] text-blue-500 font-bold uppercase tracking-widest mt-1">English Subtitle</div>
                 </td>
                 <td class="p-5 text-center">
-                    <a href="${sub.url}" onclick="window.open('https://omg10.com/4/11009681', '_blank');" target="_blank" class="download-btn bg-blue-600 text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase hover:bg-blue-700 inline-block shadow-lg shadow-blue-600/20">Download</a>
+                    <button onclick="downloadWithAd('${sub.url}')" class="download-btn bg-blue-600 text-white px-5 py-2.5 rounded-xl font-black text-[10px] uppercase hover:bg-blue-700 inline-block shadow-lg shadow-blue-600/20">Download</button>
                 </td>
             </tr>
         `;
@@ -126,6 +126,10 @@ if (anime.englishSubs && anime.englishSubs.length > 0) {
         } else {
             document.body.innerHTML = `<div class="flex flex-col items-center justify-center h-screen"><h1 class="text-4xl font-black mb-4">ANIME NOT FOUND!</h1><a href="index.html" class="bg-red-600 px-8 py-3 rounded-2xl font-bold">GO BACK HOME</a></div>`;
         }
+        function downloadWithAd(subUrl) {
+    window.open('https://omg10.com/4/11009681', '_blank');
+    window.location.href = subUrl;
+}
     </script>
 </body>
 </html>
